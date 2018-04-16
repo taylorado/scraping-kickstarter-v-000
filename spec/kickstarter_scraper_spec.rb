@@ -3,12 +3,12 @@ require Nokogiri
 
 def create_project_hash
   projects = {}
- 
+
   kickstarter.css("li.project.grid_4").each do |project|
     title = project.css("h2.bbcard_name strong a").text
     projects[title.to_sym] = {}
   end
- 
+
   # return the projects hash
   projects
 end
@@ -39,25 +39,25 @@ describe "#create_project_hash" do
   it "each project has an image link hosted on AmazonAWS" do
     create_project_hash.each do |project_title, info_hash|
       regex = /https:\/\/s3.amazonaws.com\//
-      expect(regex.match(info_hash[:image_link])).to_not be_nil 
+      expect(regex.match(info_hash[:image_link])).to_not be_nil
     end
   end
 
   it "each project has a description which is a string" do
     create_project_hash.each do |project_title, info_hash|
-      expect(info_hash[:description].class).to eq(String) 
+      expect(info_hash[:description].class).to eq(String)
     end
   end
 
   it "each project has a location which is a string" do
     create_project_hash.each do |project_title, info_hash|
-      expect(info_hash[:location].class).to eq(String) 
+      expect(info_hash[:location].class).to eq(String)
     end
   end
 
   it "each project has percentage funded listed which is an integer" do
     create_project_hash.each do |project_title, info_hash|
-      expect(info_hash[:percent_funded].class).to eq(Fixnum) 
+      expect(info_hash[:percent_funded].class).to eq(Fixnum)
     end
   end
 
